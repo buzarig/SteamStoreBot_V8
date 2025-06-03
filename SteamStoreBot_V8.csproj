@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- DNS Client (якщо ваш код його використовує) -->
+		<PackageReference Include="DnsClient" Version="1.6.1" />
+
+		<!-- IndexRange -->
+		<PackageReference Include="IndexRange" Version="1.0.3" />
+
+		<!-- Асинхронні інтерфейси (якщо в коді використовувалися) -->
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Bcl.TimeProvider" Version="8.0.0" />
+
+		<!-- Конфігурація через JSON та ENV -->
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="9.0.5" />
+
+		<!-- Залежності для DI та хостингу -->
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.5" />
+
+		<!-- Файлові провайдери, якщо використовуються -->
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="9.0.5" />
+
+		<!-- HTTP-клієнт для ApiClient (AddHttpClient) -->
+		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.5" />
+
+		<!-- Логування через Host, якщо використовується -->
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.5" />
+
+		<!-- Підтримка IOptions, якщо є в коді -->
+		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Primitives" Version="9.0.5" />
+
+		<!-- JSON-серілізація/десеріалізація під .NET 8 -->
+		<PackageReference Include="System.Text.Json" Version="9.0.5" />
+
+		<!-- Якщо в коді явно використовуються якісь System.* бібліотеки -->
+		<PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" />
+		<PackageReference Include="System.Security.AccessControl" Version="5.0.0" />
+		<PackageReference Include="System.Security.Cryptography.Algorithms" Version="4.3.0" />
+		<PackageReference Include="System.Security.Cryptography.Encoding" Version="4.3.0" />
+		<PackageReference Include="System.Security.Cryptography.Primitives" Version="4.3.0" />
+		<PackageReference Include="System.Security.Cryptography.X509Certificates" Version="4.3.0" />
+		<PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
+		<PackageReference Include="System.Text.Encodings.Web" Version="9.0.5" />
+		<PackageReference Include="System.Threading.Tasks.Extensions" Version="4.5.4" />
+		<PackageReference Include="System.ValueTuple" Version="4.5.0" />
+
+		<!-- Telegram.Bot для вашого Telegram-бота -->
+		<PackageReference Include="Telegram.Bot" Version="22.5.1" />
+
+		<!-- ZstdSharp.Port (якщо в старому коді це використовувалося) -->
+		<PackageReference Include="ZstdSharp.Port" Version="0.7.3" />
+	</ItemGroup>
+
+	<!-- botConfig.json потрібно копіювати у вихідний каталог, якщо ви хочете покласти конфіг у контейнер -->
+	<ItemGroup>
+		<None Update="botConfig.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
