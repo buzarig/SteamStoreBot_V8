@@ -1,27 +1,36 @@
-# ------------------ BUILD STAGE ------------------
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+########################################
+# 1) BUILD STAGE
+########################################
+
+# Базовий образ з повним SDK .NET 8.0 (Linux)
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build 
 WORKDIR /src
 
-# 1) Копіюємо csproj-файл і відновлюємо залежності
-COPY ["SteamStoreBot.csproj", "./"]
-RUN dotnet restore "./SteamStoreBot.csproj"
+# 1.1) Копіюємо тільки .csproj, щоб скористатися кешем Docker для dotnet restore
+#      Якщо у вас інша назва (не "SteamStoreBot_V8.csproj"), замініть її відповідно.
+COPY ["SteamStoreBot_V8.csproj", "./"]
 
-# 2) Копіюємо решту файлів проєкту
+# 1.2) Виконуємо dotnet restore, щоби завантажити всі PackageReference
+RUN dotnet restore "SteamStoreBot_V8.csproj"
+
+# 1.3) Копіюємо повністю весь вихідний код у контейнер
 COPY . .
 
-# 3) Публікуємо у Release-конфігурації
-RUN dotnet publish "SteamStoreBot.csproj" -c Release -o /app/publish
+# 1.4) Виконуємо dotnet publish (Release), результати виводяться в папку /app/publish
+RUN dotnet publish "SteamStoreBot_V8.csproj" -c Release -o /app/publish
 
-# ------------------ RUNTIME STAGE ------------------
-FROM mcr.microsoft.com/dotnet/runtime:7.0 AS runtime
+
+########################################
+# 2) RUNTIME STAGE
+########################################
+
+# Базовий образ тільки з .NET Runtime 8.0 (Linux) — вже без SDK
+FROM mcr.microsoft.com/dotnet/runtime:8.0 AS runtime
 WORKDIR /app
 
-# 4) Копіюємо зібрані артефакти з попереднього етапу
-COPY --from=build /app/publish ./ 
+# 2.1) Копіюємо результат публікації з попереднього етапу
+COPY --from=build /app/publish ./
 
-# 5) Оскільки бот читає конфігурацію з botConfig.json, переконаємося, що файл присутній у фінальному образі.
-# Якщо ви хочете підкладати його через змінні оточення, цю копію можна прибрати, 
-# але якщо він містить лише шаблон (без токена), можна лишити.
-
-# 6) Вказуємо команду запуску
-ENTRYPOINT ["dotnet", "SteamStoreBot.dll"]
+# 2.2) Встановлюємо точку входу:
+#      Тут ми запускаємо саме згенерований .dll файл.
+ENTRYPOINT ["dotnet", "SteamStoreBot_V8.dll"]
