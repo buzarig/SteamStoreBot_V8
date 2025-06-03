@@ -1,9 +1,0 @@
-{
-  "Api": {
-    "BaseUrl": "http://steambotapi.onrender.com/"
-  },
-  "TelegramBot": {
-    "Token": "8019910175:AAHFfXbbOOCHPS77UVn3H925g6gEG0ZkZiQ",
-    "PollTimeoutSeconds": 30
-  }
-}
